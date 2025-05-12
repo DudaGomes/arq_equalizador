@@ -1,18 +1,20 @@
+import os
 from collections import Counter
 
-def bin_to_txt(caminho_bin, caminho_txt):
-    # Lê os bytes do arquivo binário
+def bin_to_txt(nome_bin, nome_txt):
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Diretório onde o script está
+    caminho_bin = os.path.join(base_dir, nome_bin)
+    caminho_txt = os.path.join(base_dir, nome_txt)
+
     with open(caminho_bin, 'rb') as f:
         dados = f.read()
 
-    # Conta as ocorrências de cada valor de byte
     frequencias = Counter(dados)
 
-    # Escreve todos os valores de 0 a 255 no arquivo .txt (mesmo que com 0 ocorrências)
     with open(caminho_txt, 'w') as f:
         for valor in range(256):
             ocorrencia = frequencias.get(valor, 0)
-            f.write(f'Pixel {valor} - ocorrencia {ocorrencia}\n')
+            f.write(f'Pixel {valor} - Ocorrencia {ocorrencia}\n')
 
-# Executa a função no arquivo desejado
-bin_to_txt('freque_rgb.bin', 'frequencias_rgb.txt')
+# Chamada segura
+bin_to_txt('freque_rgb.bin', 'frequencias_rgb_equalizada.txt')

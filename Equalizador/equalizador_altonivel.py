@@ -38,6 +38,6 @@ b_eq = equalizar_canal(b)
 
 # Combinar os canais equalizados
 imagem_eq = Image.merge("RGB", (r_eq, g_eq, b_eq))
-imagem_eq.save(os.path.join("12_equalizada.jpg"))
+imagem_eq.save(os.path.join("imagem_rgb_equalizada_altonivel.jpg"))
 
 print("Imagem colorida equalizada com sucesso.")
