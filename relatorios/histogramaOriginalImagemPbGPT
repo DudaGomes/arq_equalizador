@@ -1,0 +1,17 @@
+# Carrega a imagem PB original
+pb_image_path = "/mnt/data/Imagem_PB.jpg"
+pb_image = Image.open(pb_image_path).convert("L")
+pb_pixels = np.array(pb_image)
+
+# Calcula o histograma original (não equalizado)
+pb_histogram = [np.sum(pb_pixels == i) for i in range(256)]
+
+# Plota o histograma original da imagem em tons de cinza
+plt.figure(figsize=(12, 6))
+plt.bar(range(256), pb_histogram, width=1.0)
+plt.title("Histograma Original da Imagem em Tons de Cinza")
+plt.xlabel("Valor do Pixel (0-255)")
+plt.ylabel("Ocorrência")
+plt.grid(True, linestyle='--', alpha=0.5)
+plt.tight_layout()
+plt.show()
