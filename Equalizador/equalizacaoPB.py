@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img = os.path.join(base_dir, "12.jpg")
+path_img = os.path.join(base_dir, "imagens/12.jpg")
 
 # Abrir imagem em tons de cinza
 im = Image.open(path_img).convert("L")  # Apenas um canal
@@ -33,7 +33,7 @@ imagem_equalizada.save(os.path.join("Imagem_PB_equalizada_altonivel.jpg"))
 print("Imagem equalizada salva com sucesso.")
 
 # 6. Salvar histograma
-with open("histograma_equalizado_altonivel.txt", "w") as file:
+with open("equalizadação_altonivel_PB.txt", "w") as file:
     for pixel, qtd in enumerate(np.bincount(pixels_equalizados, minlength=256)):
         file.write(f"Pixel {pixel} - ocorrencia {qtd}\n")
 

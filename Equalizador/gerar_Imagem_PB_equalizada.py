@@ -3,7 +3,7 @@ import os
 
 # Caminho para a imagem original PB
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img_pb = os.path.join(base_dir, 'imagem_PB.jpg')
+path_img_pb = os.path.join(base_dir, 'imagens/imagem_PB.jpg')
 
 # Caminho para o arquivo binário equalizado (no mesmo diretório)
 path_bin = os.path.join(base_dir, 'bin_bytes_pb.bin')
