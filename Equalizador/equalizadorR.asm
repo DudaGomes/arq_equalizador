@@ -85,8 +85,8 @@ CDF:
     la t1, buffer            							# pointer
     la s0, cont_pixel
     
-CDF_loop:
-    bge t0, s1, equalizer
+loop_CDF:
+    bge t0, s1, equalizador
     slli a3, t0, 2			
     add t6, s0, a3
     lw t3, total_acumulado
@@ -96,9 +96,9 @@ CDF_loop:
     sw t4, total_acumulado, t5
     sw t4, (t2)
     addi t0, t0, 1
-    j CDF_loop
+    j loop_CDF
  
-equalizer:
+equalizador:
     li t0, 0
     li t2, 255
     la s0, cont_pixel

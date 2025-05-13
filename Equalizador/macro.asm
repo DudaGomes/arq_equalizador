@@ -5,16 +5,14 @@ result:
     la a0, %output
     li a1, 1                 
     ecall
-    mv s2, a0                		# Descritor do arquivo
-
-   								 # Escrever frequências
+    mv s2, a0                		# descritor do arquivo						
     li t1, 0                 			# Pixel atual
     li t2, 256              			 # Limite
 
 print_freq:
     beq t1, t2, fim_macro
 
-   								# Salvar t1 e t2 na pilha
+   								# salvar t1 e t2 na pilha
     addi sp, sp, -8
     sw t1, 0(sp)
     sw t2, 4(sp)
@@ -26,29 +24,28 @@ print_freq:
     mv a2, a0               		 # Comprimento em a2
     mv a0, s2                		# Descritor do arquivo
     la a1, buffer
-    li a7, 64                		# Syscall write
+    li a7, 64                		
     ecall
     write_string_addr(frequencia, s2, 14)
-    								# Escrever frequência
+    								
     slli t3, t1, 2
     add t4, %reg, t3
     lw a0, 0(t4)
     la a1, buffer
     jal int_to_str           	 # a0 = comprimento da string
-    mv a2, a0               		 # Comprimento em a2
-    mv a0, s2             	 	 # Descritor do arquivo
+    mv a2, a0               		 # comprimento em a2
+    mv a0, s2             	 	 # descritor do arquivo
     la a1, buffer
-    li a7, 64                		# Syscall write
+    li a7, 64                		
     ecall
 
-    								# Nova linha
     la a1, newline
     li a2, 1
     li a7, 64
     mv a0, s2
     ecall
 
-   								# Restaurar t1 e t2 da pilha
+   								#volta t1 e t2 da pilha
     lw t1, 0(sp)
     lw t2, 4(sp)
     addi sp, sp, 8
@@ -59,7 +56,7 @@ print_freq:
 
 int_to_str:
     li t0, 10
-    mv t5, a1                		# Usa o buffer passado em a1
+    mv t5, a1                		# usa o buffer passado em a1
     li t3, 0
     beqz a0, zero_case
 

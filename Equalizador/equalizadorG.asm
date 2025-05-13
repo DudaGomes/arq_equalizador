@@ -86,8 +86,8 @@ CDF:
     la t1, buffer            							# Ponteiro12
     la s0, cont_pixel
     
-CDF_loop:
-    bge t0, s1, equalizer
+loop_CDF:
+    bge t0, s1, equalizador
     slli a3, t0, 2			
     add t6, s0, a3
     lw t3, total_acumulado
@@ -97,9 +97,9 @@ CDF_loop:
     sw t4, total_acumulado, t5
     sw t4, (t2)
     addi t0, t0, 1
-    j CDF_loop
+    j loop_CDF
  
-equalizer:
+equalizador:
     li t0, 0
     li t2, 255
     la s0, cont_pixel
@@ -115,10 +115,9 @@ loop:
     addi t0, t0, 1
     j loop
 
-
 result:												#pega o pixel, mult por 4, soma com o topo da pilha, o valor é o mapa de frequencia, acessando o pixel equalizado e coloco onde esta o pixel normal , onde o buffer terá agora os pixels equalizados
-    li t0, 0                 								# Contador
-    la t1, buffer           							# Ponteiro12
+    li t0, 0                 								
+    la t1, buffer           							
     la s0, cont_pixel
 result_loop:
     bge t0, s1, calcular_freq2
@@ -135,13 +134,13 @@ result_loop:
     j result_loop
    
 calcular_freq2:
-    li t0, 0                 								# Contador
-    la t1, buffer           							# Ponteiro12
+    li t0, 0                 								# contador
+    la t1, buffer           							# pointer
     la s0, cont_pixel
     fill_zero(s0, 256)
 calcular_freq2_loop:
     bge t0, s1, exit
-    lbu t6, 0(t1)            							# Carregar byte sem sinal
+    lbu t6, 0(t1)            							
     slli t3,t6, 2
     add t4, s0, t3
     lw t5, 0(t4)
