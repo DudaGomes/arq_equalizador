@@ -4,11 +4,11 @@
 buffer:        .space 21120                # Buffer de 1KB
 newline:       .string "\n"
 .align 2
-filename_pb:      .string "freque_pb.bin"
+end_pb:      .string "freque_pb.bin"
 .align 2
-output_pb:        .string "histograma_equalizador_pb.txt" 
+saida_txt_pb:        .string "histograma_equalizador_pb.txt" 
 .align 2
-output_bin_pb:    .string "bin_bytes_pb.bin"
+saida_bin_pb:    .string "bin_bytes_pb.bin"
 .align 2
 
 pixel:         .string  "Pixel \0"
@@ -17,7 +17,7 @@ frequencia:     .string  " - ocorrencia "
 .align 2
 total_acumulado:.word 0
 pixel_count: 	.space 1024
-success_msg:   .string "\nLeitura concluída. Bytes lidos: "
+msg_concluida:   .string "\nLeitura concluída. Bytes lidos: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!" 
 .align 2
@@ -58,7 +58,7 @@ main:
 
     close_file(s0)
     # Mensagem de sucesso
-    print_string_from_label(success_msg)
+    print_string_from_label(msg_concluida)
     # Mostrar quantidade de bytes
     print_int(s1)
     print_newline()
@@ -165,13 +165,11 @@ exit:
     
     mv s0, a0
     write_string_addr(buffer, s0, 21120)
-    print_string_from_label(success_msg)
+    print_string_from_label(msg_concluida)
     close_file(s0)
 .end_macro
 
 .text
-    equalized_histogram(filename_pb, output_pb, output_bin_pb)
-    #equalized_histogram(filename_blue, output_blue, output_bin_blue)
-    #equalized_histogram(filename_red, output_red, output_bin_red)
+    equalized_histogram(end_pb, saida_txt_pb, saida_bin_pb)
     li a7, 10
     ecall

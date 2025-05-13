@@ -4,11 +4,11 @@
 buffer:        .space 21120                # Buffer de 1KB
 newline:       .string "\n"
 .align 2
-filename_blue:      .string "freque_blue.bin"
+end_blue:      .string "freque_blue.bin"
 .align 2
-output_blue:        .string "histograma_equalizador_blue.txt" 
+saida_txt_blue:        .string "histograma_equalizador_blue.txt" 
 .align 2
-output_bin_blue:    .string "bin_bytes_blue.bin"
+saida_bin_blue:    .string "bin_bytes_blue.bin"
 .align 2
 
 pixel:         .string  "Pixel \0"
@@ -16,8 +16,8 @@ pixel:         .string  "Pixel \0"
 frequencia:     .string  " - ocorrencia "
 .align 2
 total_acumulado:.word 0
-pixel_count: 	.space 1024
-success_msg:   .string "\nLeitura concluída. Bytes lidos: "
+cont_pixel: 	.space 1024
+msg_concluida:   .string "\nLeitura concluída. Bytes lidos: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!" 
 .align 2
@@ -58,7 +58,7 @@ main:
 
     close_file(s0)
     # Mensagem de sucesso
-    print_string_from_label(success_msg)
+    print_string_from_label(msg_concluida)
     # Mostrar quantidade de bytes
     print_int(s1)
     print_newline()
@@ -66,7 +66,7 @@ main:
     # Loop de impressão dos bytes
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro
-    la s0, pixel_count
+    la s0, cont_pixel
     fill_zero(s0, 256)
     
 calcular_freq:
@@ -84,7 +84,7 @@ calcular_freq:
 CDF:
     li t0, 0                        # Contador
     la t1, buffer            # Ponteiro12
-    la s0, pixel_count
+    la s0, cont_pixel
     
 CDF_loop:
     bge t0, s1, equalizer
@@ -102,7 +102,7 @@ CDF_loop:
 equalizer:
     li t0, 0
     li t2, 255
-    la s0, pixel_count
+    la s0, cont_pixel
 
 loop:
     bge t0, s1, result
@@ -121,7 +121,7 @@ loop:
 result:						#pega o pixel, mult por 4, soma com o topo da pilha, o valor é o mapa de frequencia, acessando o pixel equalizado e coloco onde esta o pixel normal , onde o buffer terá agora os pixels equalizados
     li t0, 0                 		# Contador
     la t1, buffer            # Ponteiro12
-    la s0, pixel_count
+    la s0, cont_pixel
 result_loop:
     bge t0, s1, calcular_freq2
     #print_int(t1)
@@ -139,7 +139,7 @@ result_loop:
 calcular_freq2:
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
-    la s0, pixel_count
+    la s0, cont_pixel
     fill_zero(s0, 256)
 calcular_freq2_loop:
     bge t0, s1, exit
@@ -158,20 +158,18 @@ calcular_freq2_loop:
     j calcular_freq2_loop
     
 exit:
-    la s0, pixel_count
+    la s0, cont_pixel
     escrever_frequencias(s0, %output_txt)
     create_file(%output_bin)
     open_file(%output_bin, 9)
     
     mv s0, a0
     write_string_addr(buffer, s0, 21120)
-    print_string_from_label(success_msg)
+    print_string_from_label(msg_concluida)
     close_file(s0)
 .end_macro
 
 .text
-    #equalized_histogram(filename_green, output_green, output_bin_green)
-    equalized_histogram(filename_blue, output_blue, output_bin_blue)
-    #equalized_histogram(filename_red, output_red, output_bin_red)
+    equalized_histogram(end_blue, saida_txt_blue, saida_bin_blue)
     li a7, 10
     ecall
