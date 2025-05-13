@@ -13,11 +13,11 @@ saida_bin_blue:    .string "bin_bytes_blue.bin"
 
 pixel:         .string  "Pixel \0"
 .align 2
-frequencia:     .string  " - ocorrencia "
+frequencia:     .string  " cal ocorrencia "
 .align 2
 total_acumulado:.word 0
 cont_pixel: 	.space 1024
-msg_concluida:   .string "\nLeitura concluída. Bytes lidos: "
+msg_concluida:   .string "\nLeituras realizadas: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!" 
 .align 2

@@ -1,4 +1,4 @@
-# Carregar os dados do histograma equalizado com Assembly
+# carregar os dados 
 file_path_assembly = "/mnt/data/histograma_equalizador_pb.txt"
 hist_assembly = [0] * 256
 with open(file_path_assembly, 'r', encoding='utf-8') as f:
@@ -10,7 +10,7 @@ with open(file_path_assembly, 'r', encoding='utf-8') as f:
             freq = int(freq_str.replace('ocorrencia', '').strip())
             hist_assembly[pixel] = freq
 
-# Plotar histograma equalizado com Assembly
+                                # plotar histograma equalizado com Assembly
 plt.figure(figsize=(12, 6))
 plt.bar(range(256), hist_assembly, width=1.0)
 plt.title("Histograma Equalizado - Assembly")

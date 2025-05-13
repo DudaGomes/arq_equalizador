@@ -13,11 +13,11 @@ saida_bin_pb:    .string "bin_bytes_pb.bin"
 
 pixel:         .string  "Pixel \0"
 .align 2
-frequencia:     .string  " - ocorrencia "
+frequencia:     .string  " calc ocorrencia "
 .align 2
 total_acumulado:.word 0
 pixel_count: 	.space 1024
-msg_concluida:   .string "\nLeitura concluída. Bytes lidos: "
+msg_concluida:   .string "\nLeituras realizadas: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!" 
 .align 2
@@ -57,21 +57,21 @@ main:
 
 
     close_file(s0)
-    # Mensagem de sucesso
+
     print_string_from_label(msg_concluida)
-    # Mostrar quantidade de bytes
+
     print_int(s1)
     print_newline()
     
-    # Loop de impressão dos bytes
-    li t0, 0                 # Contador
-    la t1, buffer            # Ponteiro
+
+    li t0, 0                 
+    la t1, buffer            
     la s0, pixel_count
     fill_zero(s0, 256)
     
 calcular_freq:
     bge t0, s1, CDF
-    lbu t6, 0(t1)            # Carregar byte sem sinal
+    lbu t6, 0(t1)            
     slli t3,t6, 2
     add t4, s0, t3
     lw t5, 0(t4)
@@ -82,8 +82,8 @@ calcular_freq:
     j calcular_freq
 
 CDF:
-    li t0, 0                        # Contador
-    la t1, buffer            # Ponteiro12
+    li t0, 0                      
+    la t1, buffer          
     la s0, pixel_count
     
 CDF_loop:
@@ -112,33 +112,28 @@ loop:
     mul t5, t5, t2				#multiplico 255 pela CDF e 
     div t5, t5, s1				#divido por 21120
     sw t5, (t4)				#guarda onde antes estava CDF
-    #print_int(t5)
-    #print_newline()
     addi t0, t0, 1
     j loop
 
 
-result:						#pega o pixel, mult por 4, soma com o topo da pilha, o valor é o mapa de frequencia, acessando o pixel equalizado e coloco onde esta o pixel normal , onde o buffer terá agora os pixels equalizados
-    li t0, 0                 		# Contador
-    la t1, buffer            # Ponteiro12
+result:							#pega o pixel, mult por 4, soma com o topo da pilha, o valor é o mapa de frequencia, acessando o pixel equalizado e coloco onde esta o pixel normal , onde o buffer terá agora os pixels equalizados
+    li t0, 0                 			# cont
+    la t1, buffer            		# pointer
     la s0, pixel_count
 result_loop:
     bge t0, s1, calcular_freq2
-    #print_int(t1)
     lbu  t3, 0(t1)			#guarda em t3, o valor que esta no end de memoria de t1, em byte      #o 0 é o imediato 
-    #print_int(t3)
     slli t4, t3, 2
     add t3, t4, s0
     lw t5, 0(t3)
-    #print_int(t5)
     sb t5, (t1)				#guarda o valor em byte de t5 em t1
     addi t0, t0, 1 			
     addi t1, t1, 1
     j result_loop
    
 calcular_freq2:
-    li t0, 0                 # Contador
-    la t1, buffer            # Ponteiro12
+    li t0, 0               		# cont
+    la t1, buffer          	#pointer
     la s0, pixel_count
     fill_zero(s0, 256)
 calcular_freq2_loop:
@@ -149,10 +144,6 @@ calcular_freq2_loop:
     lw t5, 0(t4)
     addi t5, t5, 1
     sw t5,0(t4)
-    #print_int(t4)
-    # Imprimir valor decimal
-    #li a7, 1
-    #ecall
     addi t1, t1, 1           
     addi t0, t0, 1          
     j calcular_freq2_loop

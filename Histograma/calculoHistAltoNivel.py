@@ -6,7 +6,6 @@ def calcular_histograma(imagem_path):
     imagem = Image.open(imagem_path)
     imagem_rgb = imagem.convert('RGB')    #converter pra rgb
     imagem_array = np.array(imagem_rgb)   # converter pro array
-
    
     histograma_r = np.histogram(imagem_array[:,:,0], bins=256, range=(0, 256))[0] #calculo hist r
     histograma_g = np.histogram(imagem_array[:,:,1], bins=256, range=(0, 256))[0] #calculo hist g

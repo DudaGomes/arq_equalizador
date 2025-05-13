@@ -1,5 +1,4 @@
 
-#MACRO DO CALCULO DE HISTOGRAMA
 .macro print_inteiro(%x)
     add a0, %x, zero	#add 0 a um registrador que possui um valor a ser printado 
     li a7, 1
