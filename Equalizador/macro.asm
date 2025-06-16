@@ -11,7 +11,6 @@ result:
 
 print_freq:
     beq t1, t2, fim_macro
-
    								# salvar t1 e t2 na pilha
     addi sp, sp, -8
     sw t1, 0(sp)

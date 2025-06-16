@@ -1,4 +1,4 @@
-.include "macro.asm"
+ .include "macro.asm"
 
 .data
 buffer:        .space 21120     
@@ -82,11 +82,11 @@ calcular_freq:
 
 CDF:
     li t0, 0                       							 # contador
-    la t1, buffer            							# pointer
+    li t1, 256            							# pointer
     la s0, cont_pixel
     
 loop_CDF:
-    bge t0, s1, equalizador
+    bge t0, t1, equalizador
     slli a3, t0, 2			
     add t6, s0, a3
     lw t3, total_acumulado
@@ -110,7 +110,7 @@ loop:
     lw t5, 0(t4)
     mul t5, t5, t2										#multiplico 255 pela CDF e 
     div t5, t5, s1										#divido por 21120
-    sw t5, (t4)										#guarda onde antes estava CDF
+    sw t5, (t4)											#guarda onde antes estava CDF
     addi t0, t0, 1
     j loop
 
