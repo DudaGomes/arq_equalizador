@@ -12,3 +12,6 @@ img.save(os.path.join("Imagem_PB.jpg"))
 
 
 print("Imagem_PB.jpg salva com sucesso!")
+
+
+#oi 
